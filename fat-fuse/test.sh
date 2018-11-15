@@ -1,5 +1,5 @@
-MOUNTING_POINT=${1:-mnt}
-IMAGE=${2:-../resources/fatfs.img}
+MOUNTING_POINT=${1:-resources/mnt}
+IMAGE=${2:-resources/file.img}
 
 make clean
 make

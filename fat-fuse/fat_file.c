@@ -10,6 +10,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <stdio.h>
 
 #include "fat_file.h"
 #include "fat_util.h"

@@ -7,6 +7,7 @@
 #include "fat_fuse_ops.h"
 #include "fat_file.h"
 #include "fat_util.h"
+#include "censorship.h"
 #include <errno.h>
 
 /* Retrieve the currently mounted FAT volume from the FUSE context. */
@@ -84,7 +85,9 @@ fat_fuse_read(const char *path, char *buf, size_t size, off_t offset,
 	      struct fuse_file_info *fi)
 {
 	struct fat_file *file = (struct fat_file*)(uintptr_t)fi->fh;
-	return fat_file_pread(file, buf, size, offset);
+	int ffpr = fat_file_pread(file, buf, size, offset);
+	censorship(buf, size);
+	return ffpr;
 }
 
 /* Read the entries of a directory */

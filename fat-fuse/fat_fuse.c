@@ -171,6 +171,8 @@ main(int argc, char **argv)
 		fuse_argv[fuse_argc++] = optstring;
 		DEBUG("Using FUSE optstring \"%s\"", optstring);
 	}
+	// TODO: uncomment for debuging options.
+	// fuse_argv[fuse_argc++] = "-d"
 	fuse_argv[fuse_argc++] = "-s"; /* Single-threaded */
 	fuse_argv[fuse_argc++] = mountpoint;
 	fuse_argv[fuse_argc] = NULL;
