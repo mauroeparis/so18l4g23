@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include "censorship.h"
 
+#define FW_SIZE 114
+
 char *forbidden_words[] = {"bourgeois", "BOURGEOIS", "Bourgeois",
 "bourgeoisieclass","BOURGEOISIECLASS", "Bourgeoisieclass", "communism",
 "COMMUNISM", "Communism", "communist", "COMMUNIST", "Communist", "communists",
@@ -26,36 +28,24 @@ char *forbidden_words[] = {"bourgeois", "BOURGEOIS", "Bourgeois",
 "WORLD", "World", "work", "WORK", "Work", "working-class",
 "WORKING-CLASS", "Working-class"};
 
-const int n[] = {9, 9, 9, 16, 16, 16, 9, 9, 9, 9, 9, 9, 10, 10, 10, 11, 11,
-11, 12, 12, 12, 7, 7, 7, 9, 9, 9, 6, 6, 6, 4, 4, 4, 7, 7, 7, 7, 7, 7, 10, 10,
-10, 7, 7, 7, 3, 3, 3, 3, 3, 3, 5, 5, 5, 10, 10, 10, 13, 13, 13, 7, 7, 7, 8, 8,
-8, 9, 9, 9, 11, 11, 11, 11, 11, 11, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 6, 6,
-6, 9, 9, 9, 9, 9, 9, 10, 10, 10, 7, 7, 7, 5, 5, 5, 5, 5, 5, 4, 4, 4, 13, 13, 13
-};
-
-const int fw_size = 114;
-
-
 void censorship(char *buf, size_t size){
   /*Function that change*/
 
   int start_w = 0;
 
-  for(int i = 0; i < size; i++) {
+  for(int i = 0; i < size; i++){
     if(is_punt(buf[i])){
       int len = i - start_w;
-      char *word = malloc(len * sizeof(char));
-      for(int j = 0; j < len; j++) word[j] = buf[j + start_w];
-
-      for(int j = 0; j < fw_size; j++){
-        if(len != n[j])
-          continue;
-        if(memcmp(word, forbidden_words[j], len) == 0){
-          memset(buf + start_w, 'x', len);
-          break;
+      for(int j = 0; j < FW_SIZE; j++){
+        char *fw = forbidden_words[j];
+        if(len == strlen(fw)){
+          if(memcmp(buf + start_w, fw, len) == 0){
+            memset(buf + start_w, 'x', len);
+            break;
+          }
         }
       }
-      free(word);
+
       start_w = i + 1;
     }
   }

@@ -1,3 +1,4 @@
+#!/bin/bash
 MOUNTING_POINT=${1:-resources/mnt}
 IMAGE=${2:-resources/file.img}
 
