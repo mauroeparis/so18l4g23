@@ -79,6 +79,20 @@ fat_fuse_opendir(const char *path, struct fuse_file_info *fi)
 	return 0;
 }
 
+/* Create and open a file
+
+If the file does not exist, first create it with the specified mode,
+	and then open it.
+
+*/
+static int
+fat_fuse_create(const char *path, mode_t mode, struct fuse_file_info *fi)
+{
+	DEBUG(fi->fh);
+	return 0;
+}
+
+
 /* Read data from a file */
 static int
 fat_fuse_read(const char *path, char *buf, size_t size, off_t offset,
@@ -134,6 +148,7 @@ fat_fuse_releasedir(const char *path, struct fuse_file_info *fi)
  * implemented (the rest stay as NULL pointers and are interpreted as not
  * implemented by FUSE). */
 struct fuse_operations fat_fuse_operations = {
+	.create			= fat_fuse_create,
 	.fgetattr   = fat_fuse_fgetattr,
 	.getattr    = fat_fuse_getattr,
 	.open       = fat_fuse_open,
