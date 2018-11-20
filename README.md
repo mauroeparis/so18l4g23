@@ -91,3 +91,9 @@ Esto causó confusión, ya que creíamos que para hacer el `mknod`, teníamos qu
 Por eventos personales de todos los miembros del grupo, nos costó ponernos a trabajar el fin de semana el tiempo suficiente.
 
 El problema actual es en la implementación de `write`, entender cómo funciona el seteo de clusters.
+
+### Día 5
+
+Se nos presentó un problema, que no entendíamos por qué no fucnionaba, si todo estaba, a nuestro criterio, bien implementado. Al parecer haciendo pruebas, la imagen se corrompió.
+
+Al cargar de nuevo la imagen, nos dimos cuenta que el archivo se creaba pero el contenido no se guardaba, hasta que nos dimos cuenta de que el problema era que `do_fat_file_pwrite` que terminó siendo una copia de `do_fat_file_pread` pero agregando la función `fat_write_dir_entry`.
